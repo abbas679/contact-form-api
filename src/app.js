@@ -1,16 +1,17 @@
 const express = require("express");
+const contactRoutes = require("./routes/contact.routes");
+const errorHandler = require("./middleware/error.middleware");
 
 const app = express();
 
-// Middleware to parse JSON
 app.use(express.json());
 
-// Health check route
+app.use("/api/v1/contacts", contactRoutes);
+
 app.get("/", (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "Contact Form API is running",
-  });
+  res.json({ success: true, message: "Contact Form API is running" });
 });
+
+app.use(errorHandler);
 
 module.exports = app;
